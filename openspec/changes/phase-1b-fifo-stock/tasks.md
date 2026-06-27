@@ -25,20 +25,20 @@ Chain strategy: pending
 
 ## Phase 1: TDD Scaffold (RED)
 
-- [ ] 1.1 Create `apps/api/src/services/` directory
-- [ ] 1.2 Write `apps/api/src/services/fifo.service.test.ts` with 8 scenarios: single-lot exact, single-lot partial, two-lot split, exact-first-lot, insufficient, empty lots, zero qty, weighted-average — all FAIL (no impl yet)
+- [x] 1.1 Create `apps/api/src/services/` directory
+- [x] 1.2 Write `apps/api/src/services/fifo.service.test.ts` with 8 scenarios: single-lot exact, single-lot partial, two-lot split, exact-first-lot, insufficient, empty lots, zero qty, weighted-average — all FAIL (no impl yet)
 
 ## Phase 2: FIFO Implementation (GREEN)
 
-- [ ] 2.1 Implement `calculateFifo()` in `apps/api/src/services/fifo.service.ts` with types `FifoConsumption`, `FifoResult`, `LotInput` — stateless, no DB, no mutation
-- [ ] 2.2 Run `pnpm vitest run` — confirm all 8 scenarios pass
+- [x] 2.1 Implement `calculateFifo()` in `apps/api/src/services/fifo.service.ts` with types `FifoConsumption`, `FifoResult`, `LotInput` — stateless, no DB, no mutation
+- [x] 2.2 Run `pnpm vitest run` — confirm all 8 scenarios pass (9 total incl. immutability)
 
 ## Phase 3: Stock Query Service
 
-- [ ] 3.1 Implement `getProductStock(productId, userId)` in `apps/api/src/services/stock.service.ts` — Drizzle query with `eq(userId)`, `eq(productId)`, `gt(quantityLeft, '0')`, `orderBy(purchasedAt ASC)`, numeric cast
-- [ ] 3.2 Implement `getStockForProducts(productIds[], userId)` — batch `inArray()` query, `Map<number, StockResult>` grouping, zero-stock fallback for products with no lots
-- [ ] 3.3 Run `pnpm biome check apps/api/src/services/` — zero errors
+- [x] 3.1 Implement `getProductStock(productId, userId)` in `apps/api/src/services/stock.service.ts` — Drizzle query with `eq(userId)`, `eq(productId)`, `gt(quantityLeft, '0')`, `orderBy(purchasedAt ASC)`, numeric cast
+- [x] 3.2 Implement `getStockForProducts(productIds[], userId)` — batch `inArray()` query, `Map<number, StockResult>` grouping, zero-stock fallback for products with no lots
+- [x] 3.3 Run `pnpm biome check apps/api/src/services/` — zero errors
 
 ## Phase 4: Stock Service Tests (conditional)
 
-- [ ] 4.1 Write `apps/api/src/services/stock.service.test.ts` — happy path aggregation, empty lots, multi-tenant isolation, chronological ordering (skip if test DB is not available; relies on mocked `db.select()`)
+- [x] 4.1 Write `apps/api/src/services/stock.service.test.ts` — 10 tests covering happy path, empty lots, batch aggregation, zero-stock fallback, tenant isolation, chronological ordering (mocked `db.select()`)
