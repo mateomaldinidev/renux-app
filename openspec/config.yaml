@@ -1,0 +1,50 @@
+schema: spec-driven
+
+context: |
+  Tech stack: React 19 + TypeScript (strict) + Vite + TanStack Router/Query/Form + Zustand + shadcn/ui + Tailwind v4 + Recharts (frontend). Node.js 22+ + Hono + Drizzle ORM + PostgreSQL + JWT + bcryptjs (backend).
+  Architecture: Monorepo (pnpm workspace) — apps/web + apps/api. Hexagonal/clean architecture. Shared Zod schemas.
+  Testing: Vitest (planned, not yet installed). No test runner exists yet — greenfield project.
+  Linting/Formatting: Biome (not ESLint, not Prettier).
+  Package manager: pnpm (always).
+  Style: RENUX design system — cream background (#FFF5F0), orange primary (#F57A28), Syne + Space Mono fonts, shadcn/ui customized.
+
+strict_tdd: false
+
+testing:
+  runner: vitest (planned)
+  layers:
+    unit: vitest
+    integration: vitest + msw (planned)
+    e2e: playwright (planned)
+  coverage: vitest --coverage (planned)
+  note: No test runner installed yet. Enable strict_tdd after Vitest is configured.
+
+rules:
+  proposal:
+    - Include rollback plan for risky changes
+    - Reference AGENTS.md sections for domain rules (FIFO, order state machine, price variants)
+  specs:
+    - Use Given/When/Then for scenarios
+    - Use RFC 2119 keywords (MUST, SHALL, SHOULD, MAY)
+    - Cover FIFO edge cases (insufficient stock, composite products, promotions)
+  design:
+    - Include sequence diagrams for complex flows (order creation, FIFO consumption)
+    - Document architecture decisions with rationale
+    - Follow the layered structure from AGENTS.md (routes → services → db)
+  tasks:
+    - Group by phase (backend foundation → frontend foundation → pages)
+    - Follow the build order from AGENTS.md section 19
+    - Keep tasks completable in one session
+  apply:
+    - Follow existing code patterns
+    - All forms MUST use TanStack Form (never react-hook-form)
+    - All UI MUST follow RENUX design system (section 13 of AGENTS.md)
+    tdd: false
+    test_command: "pnpm vitest run"
+  verify:
+    test_command: "pnpm vitest run"
+    build_command: "pnpm -r build"
+    coverage_threshold: 0
+  archive:
+    - Warn before merging destructive deltas
+    - Verify FIFO logic is not broken by any archived change
