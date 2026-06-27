@@ -38,7 +38,7 @@
 - [ ] Docker Compose con PostgreSQL 16
 - [ ] `apps/api`: Hono server con health check
 - [ ] Drizzle ORM + conexión a PostgreSQL
-- [ ] Schema completo (10 tablas, sin `stock_losses`, con `user_id` en products, orders, expenses, purchaseLots)
+- [ ] Schema completo (9 tablas, sin `stock_losses`, con `user_id` en products, orders, expenses, purchaseLots)
 - [ ] `AppError` + middleware global de errores
 - [ ] Middleware JWT + rutas auth (`login`, `me`, `logout`)
 - [ ] Seed: 2 usuarios (admin + demo) + datos de ejemplo para demo
