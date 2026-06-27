@@ -3,9 +3,11 @@ import { AppError } from '../errors.js';
 
 export const errorHandler: ErrorHandler = (err, c) => {
   if (err instanceof AppError) {
-    return c.json({ error: err.message }, err.statusCode);
+    c.status(err.statusCode as 400 | 401 | 404 | 500);
+    return c.json({ error: err.message });
   }
 
   console.error('Unhandled error:', err);
-  return c.json({ error: 'Internal server error' }, 500);
+  c.status(500);
+  return c.json({ error: 'Internal server error' });
 };

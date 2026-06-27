@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import { eq, sql } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 import { config } from '../config.js';
 import { db } from './index.js';
 import {
@@ -21,10 +21,7 @@ async function getOrCreateUser(username: string, password: string): Promise<numb
   }
 
   const hash = await bcrypt.hash(password, 10);
-  const [inserted] = await db
-    .insert(users)
-    .values({ username, passwordHash: hash })
-    .returning();
+  const [inserted] = await db.insert(users).values({ username, passwordHash: hash }).returning();
   console.log(`  ✅ Created user "${username}"`);
   return inserted.id;
 }
@@ -33,7 +30,7 @@ async function seed() {
   console.log('🌱 Seeding database...\n');
 
   // ── Users ──────────────────────────────────────────────────────────────────
-  const adminId = await getOrCreateUser('admin', config.ADMIN_PASSWORD);
+  const _adminId = await getOrCreateUser('admin', config.ADMIN_PASSWORD);
   const demoId = await getOrCreateUser('demo', config.DEMO_PASSWORD);
 
   // Only insert demo sample data if this is a fresh seed

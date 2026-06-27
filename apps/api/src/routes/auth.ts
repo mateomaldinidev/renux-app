@@ -1,12 +1,12 @@
-import { Hono } from 'hono';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 import { eq } from 'drizzle-orm';
+import { Hono } from 'hono';
+import jwt from 'jsonwebtoken';
+import { config } from '../config.js';
 import { db } from '../db/index.js';
 import { users } from '../db/schema.js';
-import { config } from '../config.js';
-import { loginSchema } from '../schemas/index.js';
 import { authMiddleware } from '../middleware/auth.js';
+import { loginSchema } from '../schemas/index.js';
 
 const authRouter = new Hono();
 
@@ -33,11 +33,9 @@ authRouter.post('/login', async (c) => {
     return c.json({ error: 'Invalid credentials' }, 401);
   }
 
-  const token = jwt.sign(
-    { userId: user.id, username: user.username },
-    config.JWT_SECRET,
-    { expiresIn: '7d' },
-  );
+  const token = jwt.sign({ userId: user.id, username: user.username }, config.JWT_SECRET, {
+    expiresIn: '7d',
+  });
 
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
 

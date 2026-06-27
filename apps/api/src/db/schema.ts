@@ -44,7 +44,9 @@ export const suppliers = pgTable('suppliers', {
 
 export const products = pgTable('products', {
   id: serial('id').primaryKey(),
-  userId: integer('user_id').notNull().references(() => users.id),
+  userId: integer('user_id')
+    .notNull()
+    .references(() => users.id),
   name: varchar('name', { length: 100 }).notNull(),
   type: productTypeEnum('type').notNull().default('simple'),
   unit: unitEnum('unit').notNull().default('kg'),
@@ -57,7 +59,9 @@ export const products = pgTable('products', {
 
 export const priceVariants = pgTable('price_variants', {
   id: serial('id').primaryKey(),
-  productId: integer('product_id').notNull().references(() => products.id),
+  productId: integer('product_id')
+    .notNull()
+    .references(() => products.id),
   label: varchar('label', { length: 50 }).notNull(),
   quantity: numeric('quantity', { precision: 10, scale: 3 }).notNull(),
   basePrice: numeric('base_price', { precision: 10, scale: 2 }).notNull(),
@@ -70,8 +74,12 @@ export const priceVariants = pgTable('price_variants', {
 
 export const compositeComponents = pgTable('composite_components', {
   id: serial('id').primaryKey(),
-  parentId: integer('parent_id').notNull().references(() => products.id),
-  componentId: integer('component_id').notNull().references(() => products.id),
+  parentId: integer('parent_id')
+    .notNull()
+    .references(() => products.id),
+  componentId: integer('component_id')
+    .notNull()
+    .references(() => products.id),
   quantity: numeric('quantity', { precision: 10, scale: 3 }).notNull(),
 });
 
@@ -79,8 +87,12 @@ export const compositeComponents = pgTable('composite_components', {
 
 export const purchaseLots = pgTable('purchase_lots', {
   id: serial('id').primaryKey(),
-  userId: integer('user_id').notNull().references(() => users.id),
-  productId: integer('product_id').notNull().references(() => products.id),
+  userId: integer('user_id')
+    .notNull()
+    .references(() => users.id),
+  productId: integer('product_id')
+    .notNull()
+    .references(() => products.id),
   supplierId: integer('supplier_id').references(() => suppliers.id),
   quantityInitial: numeric('quantity_initial', { precision: 10, scale: 3 }).notNull(),
   quantityLeft: numeric('quantity_left', { precision: 10, scale: 3 }).notNull(),
@@ -93,7 +105,9 @@ export const purchaseLots = pgTable('purchase_lots', {
 
 export const orders = pgTable('orders', {
   id: serial('id').primaryKey(),
-  userId: integer('user_id').notNull().references(() => users.id),
+  userId: integer('user_id')
+    .notNull()
+    .references(() => users.id),
   customerName: varchar('customer_name', { length: 100 }),
   status: orderStatusEnum('status').notNull().default('INGRESADO'),
   discountType: varchar('discount_type', { length: 10 }),
@@ -111,9 +125,15 @@ export const orders = pgTable('orders', {
 
 export const orderLines = pgTable('order_lines', {
   id: serial('id').primaryKey(),
-  orderId: integer('order_id').notNull().references(() => orders.id),
-  productId: integer('product_id').notNull().references(() => products.id),
-  priceVariantId: integer('price_variant_id').notNull().references(() => priceVariants.id),
+  orderId: integer('order_id')
+    .notNull()
+    .references(() => orders.id),
+  productId: integer('product_id')
+    .notNull()
+    .references(() => products.id),
+  priceVariantId: integer('price_variant_id')
+    .notNull()
+    .references(() => priceVariants.id),
   quantity: numeric('quantity', { precision: 10, scale: 3 }).notNull(),
   unitPrice: numeric('unit_price', { precision: 10, scale: 2 }).notNull(),
   unitCost: numeric('unit_cost', { precision: 10, scale: 2 }).notNull(),
@@ -125,7 +145,9 @@ export const orderLines = pgTable('order_lines', {
 
 export const expenses = pgTable('expenses', {
   id: serial('id').primaryKey(),
-  userId: integer('user_id').notNull().references(() => users.id),
+  userId: integer('user_id')
+    .notNull()
+    .references(() => users.id),
   description: varchar('description', { length: 150 }).notNull(),
   amount: numeric('amount', { precision: 10, scale: 2 }).notNull(),
   category: varchar('category', { length: 50 }),
